@@ -1,7 +1,7 @@
 import unittest
 import pytest
 from unittest import TestCase
-from src.index_tools import get_writable, get_writable_indices
+from src.index_tools import get_writable, get_number_writable_indices_shards
 
 
 @pytest.fixture
@@ -29,10 +29,11 @@ class GetIsWritable(TestCase):
 
 
 class GetWritableIndices(TestCase):
-    def test_get_writeable_indices(self):
+    def test_get_number_writable_indices_shards(self):
         indices = {
             "logstash-clickhouse-000010": {
-                "aliases": {"logstash-clickhouse": {"is_write_index": True}}
+                "aliases": {"logstash-clickhouse": {"is_write_index": True}},
+                "settings": {"index": {"number_of_shards": "3"}},
             },
             "logstash-clickhouse-000011": {
                 "aliases": {"logstash-clickhouse": {"is_write_index": False}}
@@ -41,7 +42,8 @@ class GetWritableIndices(TestCase):
                 "aliases": {"logstash-clickhouse": {"is_write_index": False}}
             },
             "logstash-test-index-000020": {
-                "aliases": {"logstash-test-index": {"is_write_index": True}}
+                "aliases": {"logstash-test-index": {"is_write_index": True}},
+                "settings": {"index": {"number_of_shards": "6"}},
             },
             "logstash-test-index-000021": {
                 "aliases": {"logstash-test-index": {"is_write_index": False}}
@@ -51,17 +53,21 @@ class GetWritableIndices(TestCase):
             },
         }
         self.assertDictEqual(
-            get_writable_indices(indices),
+            get_number_writable_indices_shards(indices),
             {
-                "logstash-test-index-000020": {
-                    "aliases": {"logstash-test-index": {"is_write_index": True}}
-                },
-                "logstash-clickhouse-000010": {
-                    "aliases": {"logstash-clickhouse": {"is_write_index": True}}
-                },
+                "logstash-test-index-000020": 6,
+                "logstash-clickhouse-000010": 3,
             },
         )
 
-    def test_get_no_writeable_indices(self):
+    def test_get_no_writable_indices_shards(self):
         indices = {}
-        self.assertDictEqual(get_writable_indices(indices), {})
+        self.assertDictEqual(get_number_writable_indices_shards(indices), {})
+
+    def test_get_no_index_settings(self):
+        indices = {
+            "logstash-clickhouse-000010": {
+                "aliases": {"logstash-clickhouse": {"is_write_index": True}}
+            }
+        }
+        self.assertDictEqual(get_number_writable_indices_shards(indices), {})
