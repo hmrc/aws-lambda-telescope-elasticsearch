@@ -1,6 +1,3 @@
-from more_itertools import map_except
-
-
 def get_writable(index: dict) -> bool:
     try:
         try:
