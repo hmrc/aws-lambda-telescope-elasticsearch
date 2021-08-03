@@ -45,7 +45,7 @@ safety = "safety check"
 start_lambda = "./bin/start-lambda.sh"
 stop_lambda = "./bin/stop-lambda.sh"
 test = "task unittest"
-unittest = "nosetests -v --with-cover --cover-erase --cover-package=src.handler tests/unit/*.py"
+unittest = "PYTHONPATH='src' pytest tests/unit --cov=src"
 verify = "task test && task black_check && task safety && task bandit"
 
 [build-system]
