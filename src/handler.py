@@ -1,9 +1,9 @@
-from src.send_graphyte_message import publish_to_graphite
-from src.index_tools import (
+from send_graphyte_message import publish_to_graphite
+from index_tools import (
     get_indices_size_in_bytes,
     get_number_writable_indices_shards,
 )
-from src.elasticsearch_api import get_indices, get_indices_stats
+from elasticsearch_api import get_indices, get_indices_stats
 from aws_lambda_powertools import Logger
 import os
 
