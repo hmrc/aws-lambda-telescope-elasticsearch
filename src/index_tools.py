@@ -6,3 +6,7 @@ def get_writable(index: dict) -> bool:
             return False
     except IndexError:
         return False
+
+
+def get_writable_indices(indices: dict) -> dict:
+    return dict((k, v) for (k, v) in indices.items() if get_writable(v))
