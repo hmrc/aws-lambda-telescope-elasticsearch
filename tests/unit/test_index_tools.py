@@ -1,7 +1,10 @@
-import unittest
 import pytest
 from unittest import TestCase
-from src.index_tools import get_writable, get_number_writable_indices_shards
+from src.index_tools import (
+    get_indices_size_in_bytes,
+    get_writable,
+    get_number_writable_indices_shards,
+)
 
 
 @pytest.fixture
@@ -71,3 +74,18 @@ class GetWritableIndices(TestCase):
             }
         }
         self.assertDictEqual(get_number_writable_indices_shards(indices), {})
+
+
+class GetIndicesSize(TestCase):
+    def test_get_indices_size(self):
+        indices = {
+            "indices": {
+                "logstash-cloudwatch-000678": {
+                    "total": {"store": {"size_in_bytes": 123456789}}
+                }
+            }
+        }
+        self.assertDictEqual(
+            get_indices_size_in_bytes(indices),
+            {"logstash-cloudwatch-000678": 123456789},
+        )
