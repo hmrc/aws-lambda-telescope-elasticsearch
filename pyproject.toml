@@ -26,7 +26,6 @@ taskipy = "^1.8.1"
 version-incrementor = "^0.9.0"
 pre-commit = "^2.13.0"
 pytest = "^6.2.4"
-pytest-cov = "^2.12.1"
 
 [tool.taskipy.tasks]
 assemble = "./bin/lambda-tools.sh assemble"
@@ -46,7 +45,7 @@ safety = "safety check"
 start_lambda = "./bin/start-lambda.sh"
 stop_lambda = "./bin/stop-lambda.sh"
 test = "task unittest"
-unittest = "PYTHONPATH='src' pytest tests/unit --cov=src"
+unittest = "PYTHONPATH='src' pytest tests/unit"
 verify = "task test && task black_check && task safety && task bandit"
 
 [build-system]
