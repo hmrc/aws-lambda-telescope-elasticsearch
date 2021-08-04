@@ -1,5 +1,4 @@
 import graphyte
-
 from app_info import METRICS_PREFIX
 
 

@@ -1,10 +1,10 @@
-import pytest
 from unittest import TestCase
-from src.index_tools import (
-    get_indices_size_in_bytes,
-    get_writable,
-    get_number_writable_indices_shards,
-)
+
+import pytest
+
+from src.index_tools import get_indices_size_in_bytes
+from src.index_tools import get_number_writable_indices_shards
+from src.index_tools import get_writable
 
 
 @pytest.fixture

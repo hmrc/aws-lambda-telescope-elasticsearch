@@ -28,6 +28,22 @@ url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple"
 reference = "artifactory"
 
 [[package]]
+name = "aspy.refactor-imports"
+version = "2.2.0"
+description = "Utilities for refactoring imports in python-like syntax."
+category = "dev"
+optional = false
+python-versions = ">=3.6.1"
+
+[package.dependencies]
+cached-property = "*"
+
+[package.source]
+type = "legacy"
+url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple"
+reference = "artifactory"
+
+[[package]]
 name = "atomicwrites"
 version = "1.4.0"
 description = "Atomic file writes."
@@ -271,16 +287,19 @@ reference = "artifactory"
 
 [[package]]
 name = "boto3"
-version = "1.18.12"
+version = "1.18.13"
 description = "The AWS SDK for Python"
 category = "main"
 optional = false
 python-versions = ">= 3.6"
 
 [package.dependencies]
-botocore = ">=1.21.12,<1.22.0"
+botocore = ">=1.21.13,<1.22.0"
 jmespath = ">=0.7.1,<1.0.0"
 s3transfer = ">=0.5.0,<0.6.0"
+
+[package.extras]
+crt = ["botocore[crt] (>=1.21.0,<2.0a0)"]
 
 [package.source]
 type = "legacy"
@@ -289,7 +308,7 @@ reference = "artifactory"
 
 [[package]]
 name = "botocore"
-version = "1.21.12"
+version = "1.21.13"
 description = "Low-level, data-driven core of boto 3."
 category = "main"
 optional = false
@@ -302,6 +321,19 @@ urllib3 = ">=1.25.4,<1.27"
 
 [package.extras]
 crt = ["awscrt (==0.11.24)"]
+
+[package.source]
+type = "legacy"
+url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple"
+reference = "artifactory"
+
+[[package]]
+name = "cached-property"
+version = "1.5.2"
+description = "A decorator for caching properties in classes."
+category = "dev"
+optional = false
+python-versions = "*"
 
 [package.source]
 type = "legacy"
@@ -752,24 +784,6 @@ url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple"
 reference = "artifactory"
 
 [[package]]
-name = "mock"
-version = "4.0.3"
-description = "Rolling backport of unittest.mock for all Pythons"
-category = "dev"
-optional = false
-python-versions = ">=3.6"
-
-[package.extras]
-build = ["twine", "wheel", "blurb"]
-docs = ["sphinx"]
-test = ["pytest (<5.4)", "pytest-cov"]
-
-[package.source]
-type = "legacy"
-url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple"
-reference = "artifactory"
-
-[[package]]
 name = "mslex"
 version = "0.3.0"
 description = "shlex for windows"
@@ -1123,6 +1137,22 @@ url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple"
 reference = "artifactory"
 
 [[package]]
+name = "reorder-python-imports"
+version = "2.6.0"
+description = "Tool for reordering python imports"
+category = "dev"
+optional = false
+python-versions = ">=3.6.1"
+
+[package.dependencies]
+"aspy.refactor-imports" = ">=2.1.0"
+
+[package.source]
+type = "legacy"
+url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple"
+reference = "artifactory"
+
+[[package]]
 name = "requests"
 version = "2.25.1"
 description = "Python HTTP for Humans."
@@ -1467,7 +1497,7 @@ reference = "artifactory"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "3f1ac22aff2779dd93d7e5eb541497dbf1cb7594df23fc82d91d64be5bd6189d"
+content-hash = "1dc37706b05270033ba1fd9592f155c3a8348d74c674cc9434732e5833bddd1b"
 
 [metadata.files]
 appdirs = [
@@ -1477,6 +1507,10 @@ appdirs = [
 arrow = [
     {file = "arrow-1.1.1-py3-none-any.whl", hash = "sha256:77a60a4db5766d900a2085ce9074c5c7b8e2c99afeaa98ad627637ff6f292510"},
     {file = "arrow-1.1.1.tar.gz", hash = "sha256:dee7602f6c60e3ec510095b5e301441bc56288cb8f51def14dcb3079f623823a"},
+]
+"aspy.refactor-imports" = [
+    {file = "aspy.refactor_imports-2.2.0-py2.py3-none-any.whl", hash = "sha256:7a18039d2e8be6b02b4791ce98891deb46b459b575c52ed35ab818c4eaa0c098"},
+    {file = "aspy.refactor_imports-2.2.0.tar.gz", hash = "sha256:78ca24122963fd258ebfc4a8dc708d23a18040ee39dca8767675821e84e9ea0a"},
 ]
 atomicwrites = [
     {file = "atomicwrites-1.4.0-py2.py3-none-any.whl", hash = "sha256:6d1784dea7c0c8d4a5172b6c620f40b6e4cbfdf96d783691f2e1302a7b88e197"},
@@ -1529,12 +1563,16 @@ black = [
     {file = "black-21.7b0.tar.gz", hash = "sha256:c8373c6491de9362e39271630b65b964607bc5c79c83783547d76c839b3aa219"},
 ]
 boto3 = [
-    {file = "boto3-1.18.12-py3-none-any.whl", hash = "sha256:e5abbb2b5ebe5ad1157a3af8f28c5c944e9c6eff0dd3e778008894e018bc7e09"},
-    {file = "boto3-1.18.12.tar.gz", hash = "sha256:596fb9df00a816780db8620d9f62982eb783b3eb63a75947e172101d0785e6aa"},
+    {file = "boto3-1.18.13-py3-none-any.whl", hash = "sha256:bd6524c4ac854eb1fa31ab7040d405385f11231b84988b2a5c8e9896a3da0bf1"},
+    {file = "boto3-1.18.13.tar.gz", hash = "sha256:8c3676239a35eba465e7df2df58ca400219729d4b732b7202f18caf0308ececa"},
 ]
 botocore = [
-    {file = "botocore-1.21.12-py3-none-any.whl", hash = "sha256:7b205f96bf0e2e1017301339e4fba9fd6dfdf54680196eb43e60e60581d7d5cb"},
-    {file = "botocore-1.21.12.tar.gz", hash = "sha256:8710d03b9de3e3d94ed410f3e83809ca02050b091100d68c22ff7bf986f29fb6"},
+    {file = "botocore-1.21.13-py3-none-any.whl", hash = "sha256:ce20da2dff6ab36ebee3b2efdf0bcc859ee1a7f8ec0d2ae3eaac5f50f6c729fd"},
+    {file = "botocore-1.21.13.tar.gz", hash = "sha256:37c1c17326f9c81aba73efc6b496ccfe536822e576bc89ceee460dc18108f3a0"},
+]
+cached-property = [
+    {file = "cached-property-1.5.2.tar.gz", hash = "sha256:9fa5755838eecbb2d234c3aa390bd80fbd3ac6b6869109bfc1b499f7bd89a130"},
+    {file = "cached_property-1.5.2-py2.py3-none-any.whl", hash = "sha256:df4f613cf7ad9a588cc381aaf4a512d26265ecebd5eb9e1ba12f1319eb85a6a0"},
 ]
 certifi = [
     {file = "certifi-2021.5.30-py2.py3-none-any.whl", hash = "sha256:50b1e4f8446b06f41be7dd6338db18e0990601dce795c2b1686458aa7e8fa7d8"},
@@ -1727,10 +1765,6 @@ markupsafe = [
     {file = "MarkupSafe-2.0.1-cp39-cp39-win32.whl", hash = "sha256:10f82115e21dc0dfec9ab5c0223652f7197feb168c940f3ef61563fc2d6beb74"},
     {file = "MarkupSafe-2.0.1-cp39-cp39-win_amd64.whl", hash = "sha256:693ce3f9e70a6cf7d2fb9e6c9d8b204b6b39897a2c4a1aa65728d5ac97dcc1d8"},
     {file = "MarkupSafe-2.0.1.tar.gz", hash = "sha256:594c67807fb16238b30c44bdf74f36c02cdf22d1c8cda91ef8a0ed8dabf5620a"},
-]
-mock = [
-    {file = "mock-4.0.3-py3-none-any.whl", hash = "sha256:122fcb64ee37cfad5b3f48d7a7d51875d7031aaf3d8be7c42e2bee25044eee62"},
-    {file = "mock-4.0.3.tar.gz", hash = "sha256:7d3fbbde18228f4ff2f1f119a45cdffa458b4c0dee32eb4d2bb2f82554bac7bc"},
 ]
 mslex = [
     {file = "mslex-0.3.0-py2.py3-none-any.whl", hash = "sha256:380cb14abf8fabf40e56df5c8b21a6d533dc5cbdcfe42406bbf08dda8f42e42a"},
@@ -1934,6 +1968,10 @@ regex = [
     {file = "regex-2021.8.3-cp39-cp39-win32.whl", hash = "sha256:f35567470ee6dbfb946f069ed5f5615b40edcbb5f1e6e1d3d2b114468d505fc6"},
     {file = "regex-2021.8.3-cp39-cp39-win_amd64.whl", hash = "sha256:bfa6a679410b394600eafd16336b2ce8de43e9b13f7fb9247d84ef5ad2b45e91"},
     {file = "regex-2021.8.3.tar.gz", hash = "sha256:8935937dad2c9b369c3d932b0edbc52a62647c2afb2fafc0c280f14a8bf56a6a"},
+]
+reorder-python-imports = [
+    {file = "reorder_python_imports-2.6.0-py2.py3-none-any.whl", hash = "sha256:54a3afd594a3959b10f7eb8b54ef453eb2b5176eb7b01c111cb1893ff9a2c685"},
+    {file = "reorder_python_imports-2.6.0.tar.gz", hash = "sha256:f4dc03142bdb57625e64299aea80e9055ce0f8b719f8f19c217a487c9fa9379e"},
 ]
 requests = [
     {file = "requests-2.25.1-py2.py3-none-any.whl", hash = "sha256:c210084e36a42ae6b9219e00e48287def368a26d03a048ddad7bfee44f75871e"},

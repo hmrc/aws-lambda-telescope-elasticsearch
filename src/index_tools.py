@@ -1,3 +1,13 @@
+import os
+
+from aws_lambda_powertools import Logger
+
+logger = Logger(
+    service="aws-lambda-telescope-elasticsearch",
+    level=os.environ.get("LOG_LEVEL", "INFO"),
+)
+
+
 def get_writable(index: dict) -> bool:
     try:
         try:
@@ -9,6 +19,7 @@ def get_writable(index: dict) -> bool:
 
 
 def get_number_writable_indices_shards(indices: dict) -> dict:
+    logger.debug(f"Indices: {indices}")
     out = {}
     for index_name in indices:
         index = indices[index_name]
