@@ -11,11 +11,11 @@ url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple/"
 
 [tool.poetry.dependencies]
 python = "^3.8"
+
+[tool.poetry.dev-dependencies]
 aws-lambda-powertools = "^1.18.1"
 graphyte = "^1.6.0"
 requests = "^2.25.1"
-
-[tool.poetry.dev-dependencies]
 aws-lambda-context = "^1.1.0"
 aws-sam-cli = "^1.28.0"
 bandit = "^1.7.0"
