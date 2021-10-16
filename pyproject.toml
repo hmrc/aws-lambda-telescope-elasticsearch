@@ -10,9 +10,9 @@ name = "artifactory"
 url = "https://artefacts.tax.service.gov.uk/artifactory/api/pypi/pips/simple/"
 
 [tool.poetry.dependencies]
-python = "^3.8"
 aws-lambda-powertools = "^1.18.1"
 graphyte = "^1.6.0"
+python = "^3.8"
 requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
@@ -20,12 +20,13 @@ aws-lambda-context = "^1.1.0"
 aws-sam-cli = "^1.27.2"
 bandit = "^1.7.0"
 black = "^21.7b0"
-safety = "^1.10.3"
-reorder-python-imports = "^2.6.0"
-taskipy = "^1.8.1"
-version-incrementor = "^0.9.0"
 pre-commit = "^2.13.0"
 pytest = "^6.2.4"
+pytest-cov = "^3.0.0"
+reorder-python-imports = "^2.6.0"
+safety = "^1.10.3"
+taskipy = "^1.8.1"
+version-incrementor = "^1.5.0"
 
 [tool.taskipy.tasks]
 assemble = "./bin/lambda-tools.sh assemble"
@@ -45,7 +46,7 @@ safety = "safety check"
 start_lambda = "./bin/start-lambda.sh"
 stop_lambda = "./bin/stop-lambda.sh"
 test = "task unittest"
-unittest = "PYTHONPATH='src' pytest tests/unit"
+unittest = "PYTHONPATH='src' pytest tests/unit --cov=src"
 verify = "task test && task black_check && task safety && task bandit"
 
 [build-system]
