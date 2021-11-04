@@ -1,10 +1,13 @@
 import os
 
 from aws_lambda_powertools import Logger
+from elasticsearch_api import get_index_fields
 from elasticsearch_api import get_indices
 from elasticsearch_api import get_indices_stats
 from index_tools import get_indices_size_in_bytes
-from index_tools import get_number_writable_indices_shards
+from index_tools import get_number_index_fields
+from index_tools import get_number_indices_shards
+from index_tools import get_writable_indices
 from send_graphyte_message import publish_to_graphite
 
 logger = Logger(
@@ -35,12 +38,17 @@ def derive_and_publish_elasticsearch_metrics(graphite_host: str):
     # get all indices and number of shards that fit {get_index_alias_patterns()}
     index_alias_patterns = get_index_alias_patterns()
     elastic_url = os.environ.get("elastic_url", "https://elasticsearch")
-    index_shards = get_number_writable_indices_shards(
+    writeable_indices = get_writable_indices(
         get_indices(elastic_url, index_alias_patterns)
     )
+    index_shards = get_number_indices_shards(writeable_indices)
     indices_sizes = get_indices_size_in_bytes(
-        get_indices_stats(elastic_url, list(index_shards.keys()))
+        get_indices_stats(elastic_url, list(writeable_indices.keys()))
     )
+    indices_fields = [
+        {index_name: get_number_index_fields(get_index_fields(elastic_url, index_name))}
+        for index_name in writeable_indices.keys()
+    ]
 
     for index_name in index_shards:
         publish_to_graphite(
@@ -50,4 +58,9 @@ def derive_and_publish_elasticsearch_metrics(graphite_host: str):
     for index_name in indices_sizes:
         publish_to_graphite(
             f"{index_name}.size_in_bytes", indices_sizes[index_name], graphite_host
+        )
+
+    for index_name in indices_fields:
+        publish_to_graphite(
+            f"{index_name}.number_fields", indices_fields[index_name], graphite_host
         )

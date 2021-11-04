@@ -20,7 +20,7 @@ repos:
       - id: end-of-file-fixer
         exclude: repository.yaml
   - repo: https://github.com/python/black
-    rev: 21.9b0
+    rev: 21.10b0
     hooks:
       - id: black
         name: Run Black
@@ -31,6 +31,10 @@ repos:
         name: Run Bandit
         args: [-ll]
         language_version: python3
+  - repo: https://github.com/Lucas-C/pre-commit-hooks-safety
+    rev: v1.2.2
+    hooks:
+      - id: python-safety-dependencies-check
   - repo: https://github.com/asottile/reorder_python_imports
     rev: v2.6.0
     hooks:
