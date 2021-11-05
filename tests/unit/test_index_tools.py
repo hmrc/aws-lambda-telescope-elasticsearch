@@ -126,7 +126,7 @@ class GetIndexFields(TestCase):
     def test_get_index_fields(self):
         index = {
             "logstash-cloudwatch-000678": {
-                "mappings": {"doc": {"@timestamp": {}, "log": {}, "message": {}}}
+                "mappings": {"@timestamp": {}, "log": {}, "message": {}}
             }
         }
         self.assertEqual(
