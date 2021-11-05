@@ -123,10 +123,21 @@ class GetIndicesSize(TestCase):
 
 
 class GetIndexFields(TestCase):
-    def test_get_index_fields(self):
+    def test_get_index_fields_es7(self):
         index = {
             "logstash-cloudwatch-000678": {
                 "mappings": {"@timestamp": {}, "log": {}, "message": {}}
+            }
+        }
+        self.assertEqual(
+            get_number_index_fields(index),
+            3,
+        )
+
+    def test_get_index_fields_es6(self):
+        index = {
+            "logstash-cloudwatch-000678": {
+                "mappings": {"doc": {"@timestamp": {}, "log": {}, "message": {}}}
             }
         }
         self.assertEqual(

@@ -33,6 +33,8 @@ def get_number_index_fields(index_mapping: dict) -> int:
     logger.debug(f"index_mapping: {index_mapping}")
     index_name = list(index_mapping.keys())[0]
     logger.debug(f"index: {index_name}")
+    if "doc" in index_mapping[index_name]["mappings"]:
+        return len(index_mapping[index_name]["mappings"]["doc"].keys())
     return len(index_mapping[index_name]["mappings"].keys())
 
 
