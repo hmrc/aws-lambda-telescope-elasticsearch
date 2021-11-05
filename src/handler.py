@@ -34,6 +34,7 @@ def lambda_handler(event, context):
 
 
 def get_elasticsearch_credential():
+    logger.debug("pulling telescope password from ssm")
     client = boto3.client("ssm")
     return client.get_parameter(
         Name="/secrets/elasticsearch/telescope_password", WithDecryption=True
@@ -43,7 +44,9 @@ def get_elasticsearch_credential():
 def derive_and_publish_elasticsearch_metrics(graphite_host: str):
     # get all indices and number of shards that fit {get_index_alias_patterns()}
     index_alias_patterns = get_index_alias_patterns()
+    logger.debug(f"index aliases: {index_alias_patterns}")
     elastic_url = os.environ.get("elastic_url", "https://elasticsearch")
+    logger.debug(f"elastic url: {elastic_url}")
     elasticsearch_api = ElasticSearchAPI(
         url=elastic_url, username="telescope", password=get_elasticsearch_credential()
     )
