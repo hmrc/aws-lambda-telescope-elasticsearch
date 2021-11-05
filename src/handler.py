@@ -57,14 +57,13 @@ def derive_and_publish_elasticsearch_metrics(graphite_host: str):
     indices_sizes = get_indices_size_in_bytes(
         elasticsearch_api.get_indices_stats(list(writeable_indices.keys()))
     )
-    indices_fields = [
-        {
-            index_name: get_number_index_fields(
-                elasticsearch_api.get_index_fields(index_name)
-            )
-        }
+    indices_fields = dict(
+        (
+            index_name,
+            get_number_index_fields(elasticsearch_api.get_index_fields(index_name)),
+        )
         for index_name in writeable_indices.keys()
-    ]
+    )
 
     for index_name in index_shards:
         publish_to_graphite(
