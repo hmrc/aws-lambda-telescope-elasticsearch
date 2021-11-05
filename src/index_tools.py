@@ -29,11 +29,11 @@ def get_writable_indices(indices: dict) -> dict:
     return out
 
 
-def get_number_index_fields(index_mapping: dict) -> dict:
+def get_number_index_fields(index_mapping: dict) -> int:
     logger.debug(f"index_mapping: {index_mapping}")
     index_name = list(index_mapping.keys())[0]
     logger.debug(f"index: {index_name}")
-    return len(index_mapping[index_name]["mappings"]["doc"].keys())
+    return len(index_mapping[index_name]["mappings"].keys())
 
 
 def get_number_indices_shards(indices: dict) -> dict:
